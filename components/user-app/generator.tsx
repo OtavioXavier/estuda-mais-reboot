@@ -5,22 +5,22 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { CheckCheck, LoaderPinwheel } from "lucide-react";
 import { generateSummary } from "@/utils/actions";
-import { useSummaryStore } from "@/utils/store";
 import { schemaSummaryQuestions } from "@/types/schemas";
 import { SQ } from "@/types";
 import { useRouter } from "next/navigation";
+import { useSummary } from "@/context/SummaryContext";
 
 
 export default function Generator() {
     const [isFinish, setIsFinish] = useState<boolean>(false);
-    const { setData } = useSummaryStore();
+    const { setSummary } = useSummary();
     const router = useRouter();
 
     const [result, handleGenerateSummary, isPending] = useActionState(generateSummary, null);
 
     useEffect(() => {
         if (schemaSummaryQuestions.safeParse(result).success) {
-            setData(result as SQ);
+            setSummary(result as SQ);
             setIsFinish(true);
             setTimeout(() => {
                 router.replace("user-app/resumos");
@@ -29,7 +29,7 @@ export default function Generator() {
             console.log('erro de validacao');
         }
     }, [result])
-    console.log('resultado: ', {result})
+    console.log('resultado: ', { result })
 
     return (
         <div>
