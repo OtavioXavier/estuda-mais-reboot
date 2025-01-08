@@ -29,7 +29,6 @@ export default function Generator() {
             console.log('erro de validacao');
         }
     }, [result])
-    console.log('resultado: ', { result })
 
     return (
         <div>
