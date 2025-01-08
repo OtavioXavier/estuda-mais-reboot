@@ -1,12 +1,11 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect, RedirectType } from "next/navigation";
 import { cookies } from "next/headers"
-import Logo from "./components/Logo";
 import { crimsonText, josefinSans } from "@/utils/fonts";
-import LoginForms from "./components/LoginForms";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CadastrarForm from "@/components/auth/CadastrarForm";
 import LoginForm from "@/components/auth/LoginForm";
+import Logo from "@/components/commom/logo";
 
 export default async function Home() {
   let loggedIn = false;

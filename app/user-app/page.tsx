@@ -1,11 +1,8 @@
-import { UserNav } from "@/components/commom/user-nav";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
-import Logo from "../components/Logo";
-import CardSession from "@/components/commom/card-session";
-import { BookCopy, Calendar, History } from "lucide-react";
-import Link from "next/link";
+import Generator from "@/components/user-app/generator";
+import { josefinSans } from "@/utils/fonts";
 
 export default async function UserApp() {
     let loggedIn = false;
@@ -20,21 +17,12 @@ export default async function UserApp() {
         if (!loggedIn) redirect("/", RedirectType.replace)
     }
 
+
     return (
         <div>
-            <section className="flex md:flex-row flex-col items-center min-h-screen justify-center gap-16">
-                <CardSession title="Estudar" description="Use esta seção para o seu momento de estudos.">
-                    <BookCopy size={128} color="#007BFF" />
-                </CardSession>
-                <Link href={"/user-app/rotina"}>
-                    <CardSession title="Rotina" description="Use esta seção para organizar a sua semana de estudos adicionando materias aos dias da semana.">
-                        <Calendar size={128} color="#007BFF" />
-                    </CardSession>
-                </Link>
-
-                <CardSession title="Historico" description="Sessão em construção">
-                    <History size={128} color="#007BFF" />
-                </CardSession>
+            <section className="flex flex-col items-center min-h-screen justify-center gap-8">
+                <h1 className={`${josefinSans.className} font-bold text-xl`}>O que você vai estudar?</h1>
+                <Generator />
             </section>
         </div>
     )
