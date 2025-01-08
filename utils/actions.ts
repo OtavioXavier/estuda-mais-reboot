@@ -26,11 +26,12 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
      const prompt = `
        Pesquise nos 6 melhores sites do google para este assunto: ${assunto}.
  
-       Depois, liste um resumo para cada site contendo 200 caracteres, depois 10 a 15 questões sobre estes resumos.
+       Depois, liste um resumo para cada site contendo pelo menos 3 paragrafos com 600 caracteres.
+       Após isto crie ou pegue da internet 10 a 15 questões sobre estes resumos.
  
        As questões podem ser divididas em abertas e objetivas, nas objetivas é necessário uma resposta correta (reposta), alternativas (array onde a primeira posição equivale a letra A e assim por diante).
  
-       Os resumos devem conter o nome do site resumido, mas basta o nome principal, como por exemplo, Wikipedia. Devem conter também parágrafos onde deve ser discorrido este resumo, onde, cada item no array parágrafos é respectivamente um parágrafo. Além de um bom título... Devem conter pelo menos 5 resumos.
+       Os resumos devem conter o nome do site resumido, mas basta o nome principal, como por exemplo, Wikipedia. Devem conter também parágrafos onde deve ser discorrido este resumo, onde, cada item no array parágrafos é respectivamente um parágrafo. Além de um bom título... Devem conter pelo menos 6 resumos.
  
        Tudo deve ter um id uuid seguindo o schema.
      `;
