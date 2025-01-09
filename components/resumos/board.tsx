@@ -21,7 +21,7 @@ export default function Board() {
     }, [selected])
     return (
         <main className="min-h-screen flex w-full">
-            <aside className="w-64 min-h-screen flex justify-center pt-4">
+            <aside className="w-64 min-h-screen flex justify-center p-4">
                 <ul className="space-y-2">
                     {resumos.map((resumo, i) => (
                         <ListItem isSelected={selected === resumo.id} site={resumo.site} id={resumo.id} key={i} onClick={() => setSelected(resumo.id)} />
