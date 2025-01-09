@@ -1,7 +1,8 @@
 export type Resumo = {
     id: string,
     titulo: string,
-    paragrafos: stringp[],
+    texto: string,
+    link: string,
     site: string
 }
 
