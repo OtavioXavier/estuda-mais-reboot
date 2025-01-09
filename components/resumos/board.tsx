@@ -4,10 +4,11 @@ import ListItem from "./list-item";
 import { useEffect, useState } from "react";
 import MainText from "./main-text";
 import { Resumo } from "@/types";
+import QuestionsList from "./questions-list";
 
 export default function Board() {
     const { data } = useSummary();
-    const { resumos } = data;
+    const { resumos, questoes } = data;
 
     const fakeSummary = {
         id: '',
@@ -31,11 +32,18 @@ export default function Board() {
             <aside className="w-64 min-h-screen flex justify-center p-4">
                 <ul className="space-y-2">
                     {resumos.map((resumo, i) => (
-                        <ListItem isSelected={selected === resumo.id} site={resumo.site} id={resumo.id} key={i} onClick={() => setSelected(resumo.id)} />
+                        <ListItem isSelected={selected === resumo.id} site={resumo.site} key={i} onClick={() => setSelected(resumo.id)} />
                     ))}
+
+                    <ListItem
+                        type="questions"
+                        isSelected={selected === 'questoes'}
+                        onClick={() => setSelected('questoes')}
+                    />
+
                 </ul>
             </aside>
-            <MainText {...summary} />
+            {selected === 'questoes' ? <QuestionsList questoes={questoes} /> : <MainText {...summary} />}
         </main>
     )
 }
