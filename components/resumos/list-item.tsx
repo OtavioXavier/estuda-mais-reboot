@@ -5,16 +5,15 @@ import clsx from "clsx";
 
 interface ListItemProps {
     isSelected: boolean;
-    site: string;
+    site?: string;
     type?: 'summary' | 'questions';
-    id: string;
-    onClick?: () => void
+    onClick?: () => void;
 }
 
 export default function ListItem({ isSelected, site, type = 'summary', onClick }: ListItemProps) {
     return (
         <li>
-            <Button className={clsx(isSelected ? 'bg-main hover:bg-main hover:opacity-80' : 'bg-transparent border-2 border-text-zinc-400 text-zinc-400 hover:bg-main hover:text-white', "h-12 w-56 justify-normal gap-4  transition-all rounded-xl")} onClick={onClick}>
+            <Button className={clsx(isSelected ? 'bg-main hover:bg-main hover:opacity-80' : 'bg-transparent border border-zinc-400 text-zinc-400 hover:bg-main  hover:text-white', "h-12 w-56 justify-normal gap-4  transition-all rounded-xl")} onClick={onClick}>
                 {type === 'summary' ? <ScrollText /> : <ClipboardList />}
 
                 <span className={`${crimsonText.className} `}>{type === 'summary' ? site : 'Questões'}</span>
