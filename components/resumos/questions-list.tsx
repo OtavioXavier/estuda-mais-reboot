@@ -45,5 +45,3 @@ export default function QuestionsList({ questoes }: QuestionsListProps) {
         </ScrollArea>
     )
 }
-
-'bg-transparent border-2 border-zinc-400 text-zinc-400 hover:bg-main hover:text-white'
