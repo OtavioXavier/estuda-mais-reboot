@@ -9,7 +9,13 @@ export default function Board() {
     const { data } = useSummary();
     const { resumos } = data;
 
-    const fakeSummary = { id: '', site: '', titulo: '', paragrafos: [] }
+    const fakeSummary = {
+        id: '',
+        site: '',
+        titulo: '',
+        texto: '',
+        link: ''
+    }
 
     const [selected, setSelected] = useState<string>('');
     const [summary, setSummary] = useState<Resumo>(fakeSummary);
@@ -19,6 +25,7 @@ export default function Board() {
         setSummary(selectedSummary);
         console.log({ summary })
     }, [selected])
+
     return (
         <main className="min-h-screen flex w-full">
             <aside className="w-64 min-h-screen flex justify-center p-4">
