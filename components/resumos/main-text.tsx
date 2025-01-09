@@ -1,8 +1,9 @@
 import { crimsonText, josefinSans } from "@/utils/fonts";
 import { ScrollArea } from "../ui/scroll-area";
+import Link from "next/link";
 
 interface MainTextProps {
-    paragrafos: string[],
+    texto: string,
     titulo: string,
     site: string,
     link: string
