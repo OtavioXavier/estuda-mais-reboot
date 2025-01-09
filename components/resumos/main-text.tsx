@@ -9,8 +9,7 @@ interface MainTextProps {
 
 export default function MainText({ paragrafos, titulo, site }: MainTextProps) {
     return (
-        <main className="flex-grow p-8">
-
+        <main className="flex-grow p-8 transition-all animate-fade-in-down">
             <header className="flex  justify-between">
                 <h1 className={`${josefinSans.className} text-xl font-semibold`}>{titulo}</h1>
                 <span className={`${josefinSans.className} text-sm text-muted-foreground`}>{site}</span>
