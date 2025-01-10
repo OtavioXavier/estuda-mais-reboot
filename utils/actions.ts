@@ -40,7 +40,6 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
       schema: schemaSummaryQuestions,
       prompt,
     });
-    console.log('resumos: ', { object })
 
     const validatedObject = schemaSummaryQuestions.parse(object);
 
