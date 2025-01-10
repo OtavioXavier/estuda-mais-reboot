@@ -12,8 +12,7 @@ export const schemaSummaryQuestions = z.object({
       id: z.string(),
       numero: z.number(),
       titulo: z.string(),
-      tipo: z.enum(['objetiva', 'aberta']),
-      resposta: z.string().optional(),
-      alternativas: z.string().array().optional(),
+      resposta: z.string(),
+      alternativas: z.string().array(),
    }).array(),
 });

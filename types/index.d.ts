@@ -10,9 +10,8 @@ export type Questao = {
     id: string,
     numero: number,
     titulo: string,
-    tipo: 'objetiva' | 'aberta',
-    resposta?: string,
-    alternativas?: string[]
+    resposta: string,
+    alternativas: string[]
 }
 
 export type SQ = {

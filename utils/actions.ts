@@ -30,7 +30,7 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
 
        Após isto crie ou pegue da internet 10 a 15 questões relacionadas estes resumos.
  
-       As questões devem ser divididas em abertas e objetivas, nas objetivas é necessário uma resposta correta (reposta), alternativas (array onde a primeira posição equivale a letra A e assim por diante).
+       Para as questões é necessário uma resposta correta (reposta), alternativas (array onde a primeira posição equivale a letra A e assim por diante).
  
        Todos os itens criados devem conter um id uuid e seguir o schema.
      `;
