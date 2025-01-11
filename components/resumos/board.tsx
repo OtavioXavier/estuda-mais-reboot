@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import MainText from "./main-text";
 import { Resumo } from "@/types";
 import QuestionsList from "./questions-list";
+import { Button } from "../ui/button";
+import { ListRestart, RotateCcw } from "lucide-react";
 
 export default function Board() {
     const { data } = useSummary();
@@ -40,6 +42,15 @@ export default function Board() {
                         isSelected={selected === 'questoes'}
                         onClick={() => setSelected('questoes')}
                     />
+
+                    <li className="flex space-x-2">
+                        <Button className="h-12 rounded-xl bg-main hover:bg-opacity-80">
+                            <ListRestart /> re-gerar
+                        </Button>
+                        <Button className="h-12 rounded-xl bg-main hover:bg-opacity-80">
+                            <RotateCcw className="hover:animate-spin" /> re-iniciar
+                        </Button>
+                    </li>
 
                 </ul>
             </aside>
