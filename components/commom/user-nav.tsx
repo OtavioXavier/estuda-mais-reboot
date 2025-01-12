@@ -16,7 +16,7 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { createClientComponentClient, User } from "@supabase/auth-helpers-nextjs";
+import { createClientComponentClient, type User } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -24,8 +24,8 @@ export function UserNav() {
 
     const [user, setUser] = useState<User | null>(null);
     const router = useRouter();
-
     const supabase = useMemo(() => createClientComponentClient(), []);
+
 
     const getUser = useCallback(async () => {
         try {
@@ -33,7 +33,7 @@ export function UserNav() {
                 data: { user },
                 error
             } = await supabase.auth.getUser();
-            
+
             if (error) {
                 throw new Error(`obtendo o usuario: ${error}`)
             } else {

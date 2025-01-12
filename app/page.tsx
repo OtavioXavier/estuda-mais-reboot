@@ -3,8 +3,8 @@ import { redirect, RedirectType } from "next/navigation";
 import { cookies } from "next/headers"
 import { crimsonText } from "@/utils/fonts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CadastrarForm from "@/components/auth/CadastrarForm";
-import LoginForm from "@/components/auth/LoginForm";
+import SignupForm from "@/components/auth/signup-form";
+import LoginForm from "@/components/auth/login-form";
 import Logo from "@/components/commom/logo";
 
 export default async function Home() {
@@ -37,11 +37,9 @@ export default async function Home() {
             <TabsTrigger className="data-[state=active]:bg-main w-48 data-[state=active]:text-white" value="cadastrar">Cadastrar</TabsTrigger>
             <TabsTrigger className="data-[state=active]:bg-main w-48 data-[state=active]:text-white" value="entrar">Entrar</TabsTrigger>
           </TabsList>
-          <TabsContent value="cadastrar"><CadastrarForm /></TabsContent>
+          <TabsContent value="cadastrar"><SignupForm /></TabsContent>
           <TabsContent value="entrar"><LoginForm /></TabsContent>
         </Tabs>
-
-
       </div>
     </div>
   );
