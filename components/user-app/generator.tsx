@@ -28,7 +28,7 @@ export default function Generator() {
         } else {
             console.log('erro de validacao');
         }
-    }, [result])
+    }, [result, router, setSummary])
 
     return (
         <div>

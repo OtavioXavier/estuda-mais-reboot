@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect, RedirectType } from "next/navigation";
 import { cookies } from "next/headers"
-import { crimsonText, josefinSans } from "@/utils/fonts";
+import { crimsonText } from "@/utils/fonts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CadastrarForm from "@/components/auth/CadastrarForm";
 import LoginForm from "@/components/auth/LoginForm";
@@ -25,7 +25,7 @@ export default async function Home() {
       <div className="bg-main w-1/2 min-h-screen rounded-xl p-4">
         <Logo theme="light" />
         <div className="mt-40 ml-10">
-          <p className={`${crimsonText.className} text-white text-5xl `}>"O sucesso é a soma de pequenos esforços repetidos <span className="font-bold">dia após dia</span>."</p>
+          <p className={`${crimsonText.className} text-white text-5xl `}>&quot; O sucesso é a soma de pequenos esforços repetidos <span className="font-bold">dia após dia</span>. &quot;</p>
           <p className={`${crimsonText.className} text-white text-2xl font-bold mt-4`}>— Robert Collier</p>
         </div>
       </div>

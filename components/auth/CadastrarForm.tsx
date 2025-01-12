@@ -85,7 +85,7 @@ export default function CadastrarForm() {
         router.refresh();
       }
 
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Erro",
         variant: "destructive",

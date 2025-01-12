@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { createClientComponentClient, User } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function UserNav() {
 
@@ -27,7 +27,7 @@ export function UserNav() {
 
     const supabase = createClientComponentClient();
 
-    const getUser = async () => {
+    const getUser = useCallback(async () => {
         try {
             const {
                 data: { user },
@@ -42,11 +42,11 @@ export function UserNav() {
         } catch (error) {
             console.log("ocerreu um erro em user-nav ", error)
         };
-    }
+    }, [supabase])
 
     useEffect(() => {
         getUser();
-    }, [])
+    }, [getUser])
 
     const handleSignout = async () => {
         await supabase.auth.signOut();

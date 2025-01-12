@@ -18,3 +18,4 @@ export type SQ = {
     resumos: Resumo[],
     questoes: Questao[]
 }
+

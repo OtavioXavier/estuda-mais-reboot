@@ -16,3 +16,11 @@ export const schemaSummaryQuestions = z.object({
       alternativas: z.string().array(),
    }).array(),
 });
+
+export const formSchemaLogin = z.object({
+  email: z.string({ required_error: "Email é necessário.", }).email({ message: 'Por favor insira um email válido.' }).trim(),
+  password: z
+    .string({ required_error: "Senha é necessária." })
+    .trim()
+})
+

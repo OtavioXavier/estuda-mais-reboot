@@ -1,4 +1,3 @@
-import { josefinSans } from "@/utils/fonts"
 import { BookCopy } from "lucide-react"
 
 interface LogoProps {

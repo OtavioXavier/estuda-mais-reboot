@@ -1,7 +1,7 @@
 'use client'
 import { useSummary } from "@/context/SummaryContext";
 import ListItem from "./list-item";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import MainText from "./main-text";
 import { Resumo } from "@/types";
 import QuestionsList from "./questions-list";
@@ -12,13 +12,13 @@ export default function Board() {
     const { data } = useSummary();
     const { resumos, questoes } = data;
 
-    const fakeSummary = {
+    const fakeSummary = useMemo(() => ({
         id: '',
         site: '',
         titulo: '',
         texto: '',
-        link: ''
-    }
+        link: '',
+    }), []);
 
     const [selected, setSelected] = useState<string>('');
     const [summary, setSummary] = useState<Resumo>(fakeSummary);
@@ -26,8 +26,7 @@ export default function Board() {
     useEffect(() => {
         const selectedSummary = resumos.find((resumo) => resumo.id === selected) ?? fakeSummary;
         setSummary(selectedSummary);
-        console.log({ summary })
-    }, [selected])
+    }, [selected, fakeSummary, resumos])
 
     return (
         <main className="min-h-screen flex w-full">

@@ -1,7 +1,7 @@
 'use client'
 
 import { Questao } from "@/types"
-import { Card, CardFooter, CardTitle } from "../ui/card"
+import { Card, CardTitle } from "../ui/card"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { Label } from "../ui/label"
 import { CheckCheck } from "lucide-react"
