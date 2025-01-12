@@ -1,24 +1,24 @@
-"use client";
+// "use client";
 
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { createClientComponentClient, User } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+// import {
+//     Avatar,
+//     AvatarFallback,
+//     AvatarImage,
+// } from "@/components/ui/avatar";
+// import { Button } from "@/components/ui/button";
+// import {
+//     DropdownMenu,
+//     DropdownMenuContent,
+//     DropdownMenuGroup,
+//     DropdownMenuItem,
+//     DropdownMenuLabel,
+//     DropdownMenuSeparator,
+//     DropdownMenuShortcut,
+//     DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu";
+// import { createClientComponentClient, User } from "@supabase/auth-helpers-nextjs";
+// import { useRouter } from "next/navigation";
+// import { useCallback, useEffect, useMemo, useState } from "react";
 
 export function UserNav() {
 
