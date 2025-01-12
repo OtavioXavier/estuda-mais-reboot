@@ -18,14 +18,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { createClientComponentClient, User } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export function UserNav() {
 
-    const [user, setUser] = useState<User | null>();
+    const [user, setUser] = useState<User | null>(null);
     const router = useRouter();
 
-    const supabase = createClientComponentClient();
+    const supabase = useMemo(() => createClientComponentClient(), []);
 
     const getUser = useCallback(async () => {
         try {
