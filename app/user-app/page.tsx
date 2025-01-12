@@ -15,7 +15,12 @@ export default async function UserApp() {
     } catch (e) {
         console.log("User app:", e);
     } finally {
-        if (!loggedIn) redirect("/", RedirectType.replace)
+        if (!loggedIn) {
+            console.log("Não esta logado")
+            redirect("/", RedirectType.replace)
+        }
+        console.log("esta logado")
+
     }
 
     return (
