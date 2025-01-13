@@ -82,7 +82,7 @@ export default function CadastrarForm() {
           title: "Sucesso",
           description: "Cadastro concluido com sucesso!"
         })
-        router.refresh();
+        router.replace("/user-app");
       }
 
     } catch (error) {

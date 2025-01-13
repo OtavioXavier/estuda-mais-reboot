@@ -47,8 +47,7 @@ export default function LoginForm() {
         description: "Login concluido com sucesso!"
       })
 
-      router.refresh();
-
+      router.replace("/user-app");
 
     } catch (error) {
       toast({
