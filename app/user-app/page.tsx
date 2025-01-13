@@ -1,6 +1,6 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { redirect, RedirectType } from "next/navigation";
+// import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+// import { cookies } from "next/headers";
+// import { redirect, RedirectType } from "next/navigation";
 import Generator from "@/components/user-app/generator";
 import { josefinSans } from "@/utils/fonts";
 

@@ -1,6 +1,6 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { redirect, RedirectType } from "next/navigation";
-import { cookies } from "next/headers"
+// import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+// import { redirect, RedirectType } from "next/navigation";
+// import { cookies } from "next/headers"
 import { crimsonText } from "@/utils/fonts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SignupForm from "@/components/auth/signup-form";

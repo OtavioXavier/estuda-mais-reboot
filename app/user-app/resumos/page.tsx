@@ -1,6 +1,6 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { redirect, RedirectType } from "next/navigation";
-import { cookies } from "next/headers";
+// import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+// import { redirect, RedirectType } from "next/navigation";
+// import { cookies } from "next/headers";
 import Board from "@/components/resumos/board";
 
 export default async function Resumos() {
