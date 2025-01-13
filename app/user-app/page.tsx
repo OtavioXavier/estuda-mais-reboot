@@ -5,23 +5,23 @@ import Generator from "@/components/user-app/generator";
 import { josefinSans } from "@/utils/fonts";
 
 export default async function UserApp() {
-    let loggedIn = false;
-    try {
-        const supabase = createServerComponentClient({ cookies })
+    // let loggedIn = false;
+    // try {
+    //     const supabase = createServerComponentClient({ cookies })
 
-        const { data: { session } } = await supabase.auth.getSession();
+    //     const { data: { session } } = await supabase.auth.getSession();
 
-        if (session) loggedIn = true;
-    } catch (e) {
-        console.log("User app:", e);
-    } finally {
-        if (!loggedIn) {
-            console.log("Não esta logado")
-            redirect("/", RedirectType.replace)
-        }
-        console.log("esta logado")
+    //     if (session) loggedIn = true;
+    // } catch (e) {
+    //     console.log("User app:", e);
+    // } finally {
+    //     if (!loggedIn) {
+    //         console.log("Não esta logado")
+    //         redirect("/", RedirectType.replace)
+    //     }
+    //     console.log("esta logado")
 
-    }
+    // }
 
     return (
         <div>

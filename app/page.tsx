@@ -8,17 +8,17 @@ import LoginForm from "@/components/auth/login-form";
 import Logo from "@/components/commom/logo";
 
 export default async function Home() {
-  let loggedIn = false;
-  try {
-    const supabase = createServerComponentClient({ cookies })
-    const { data: { session } } = await supabase.auth.getSession();
+  // let loggedIn = false;
+  // try {
+  //   const supabase = createServerComponentClient({ cookies })
+  //   const { data: { session } } = await supabase.auth.getSession();
 
-    if (session) loggedIn = true;
-  } catch (e) {
-    console.log("Home:", e);
-  } finally {
-    if (loggedIn) redirect("/user-app", RedirectType.replace)
-  }
+  //   if (session) loggedIn = true;
+  // } catch (e) {
+  //   console.log("Home:", e);
+  // } finally {
+  //   if (loggedIn) redirect("/user-app", RedirectType.replace)
+  // }
 
   return (
     <div className="p-4 flex space-x-6">
