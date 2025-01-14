@@ -1,6 +1,3 @@
-// import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-// import { redirect, RedirectType } from "next/navigation";
-// import { cookies } from "next/headers"
 import { crimsonText } from "@/utils/fonts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SignupForm from "@/components/auth/signup-form";
@@ -8,18 +5,6 @@ import LoginForm from "@/components/auth/login-form";
 import Logo from "@/components/commom/logo";
 
 export default async function Home() {
-  // let loggedIn = false;
-  // try {
-  //   const supabase = createServerComponentClient({ cookies })
-  //   const { data: { session } } = await supabase.auth.getSession();
-
-  //   if (session) loggedIn = true;
-  // } catch (e) {
-  //   console.log("Home:", e);
-  // } finally {
-  //   if (loggedIn) redirect("/user-app", RedirectType.replace)
-  // }
-
   return (
     <div className="p-4 flex items-center md:items-start flex-col-reverse md:flex-row space-y-6 md:space-x-6">
       <div className="bg-main md:w-1/2 min-h-screen rounded-xl p-4">
