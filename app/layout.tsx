@@ -28,7 +28,7 @@ export default function RootLayout({
     <SummaryProvider>
       <html lang="pt-br">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           {children}
           <Toaster />
