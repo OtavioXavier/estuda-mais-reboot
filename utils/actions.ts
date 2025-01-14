@@ -4,9 +4,6 @@ import { generateObject } from 'ai';
 import { z } from 'zod';
 import { schemaSummaryQuestions } from '@/types/schemas';
 import { SQ } from '@/types';
-import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
-import { createClient } from './supabase/server';
 
 const generateSummarySchema = z.object({
   assunto: z.string().min(2, { message: 'é necessário um assunto para começarmos os resumos' })
@@ -38,10 +35,21 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
        Todos os itens criados devem conter um id uuid e seguir o schema.
      `;
 
+     const promptTeste = `
+    Pesquise nos 4 melhores sites de notícias ou artigos científicos sobre: ${assunto}.
+    Resuma cada site com:
+      - Nome do site.
+      - Título relevante.
+      - Resumo do texto (400 palavras).
+      - Link para o texto original.
+    Gere também 8 a 10 perguntas com respostas, incluindo alternativas (A, B, C, D), todas relacionadas aos resumos.
+    Use o schema fornecido para os resultados.
+`;
+
     const { object } = await generateObject({
       model: genAI('gemini-2.0-flash-exp'),
       schema: schemaSummaryQuestions,
-      prompt,
+      prompt: promptTeste,
     });
 
     const validatedObject = schemaSummaryQuestions.parse(object);
@@ -52,53 +60,3 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
     return null;
   }
 };
-
-export const login = async (formData: FormData) => {
-  const supabase = await createClient();
-
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
-
-  const { error } = await supabase.auth.signInWithPassword(data);
-
-  if (error) {
-    console.log(error)
-    redirect("/error");
-  }
-
-  revalidatePath('/', 'layout');
-  redirect('/user-app');
-}
-
-export const signup = async (formData: FormData) => {
-  const supabase = await createClient();
-
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-    nome: formData.get('name') as string,
-    termo: formData.get('license') as string,
-  }
-
-  const { error, data: { user } } = await supabase.auth.signUp({ email: data.email, password: data.password });
-
-  if (user) {
-    const { error } = await supabase
-      .from("estudante")
-      .insert({
-        email: data.email,
-        nome: data.nome,
-        termo: data.termo
-      })
-    console.log(error)
-    if (error) throw new Error(`Erro ao inserir dados na tabela: ${error.message}`);
-  }
-
-  console.log(error)
-  if (error) redirect("/error");
-
-  revalidatePath('/', 'layout')
-  redirect('/user-app')
-}
