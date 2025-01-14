@@ -4,7 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { CheckCheck, LoaderPinwheel } from "lucide-react";
-import { generateSummary } from "@/utils/actions";
+import { generateSummary } from "@/app/actions";
 import { schemaSummaryQuestions } from "@/types/schemas";
 import { SQ } from "@/types";
 import { useRouter } from "next/navigation";
