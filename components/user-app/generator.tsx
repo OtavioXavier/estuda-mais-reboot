@@ -19,14 +19,16 @@ export default function Generator() {
     const [result, handleGenerateSummary, isPending] = useActionState(generateSummary, null);
 
     useEffect(() => {
-        if (schemaSummaryQuestions.safeParse(result).success) {
-            setSummary(result as SQ);
-            setIsFinish(true);
-            setTimeout(() => {
-                router.replace("user-app/resumos");
-            }, 1000)
-        } else {
-            console.log('erro de validacao');
+        if (result) {
+            console.time("Validation and Routing");
+            if (schemaSummaryQuestions.safeParse(result).success) {
+                setSummary(result as SQ);
+                setIsFinish(true);
+                router.replace("/user-app/resumos");
+            } else {
+                console.log('erro de validacao');
+            }
+            console.timeEnd("Validation and Routing");
         }
     }, [result, router, setSummary])
 
