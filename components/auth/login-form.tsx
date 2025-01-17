@@ -60,7 +60,7 @@ export default function LoginForm() {
   }
 
   return (
-    <ScrollArea className="h-[80vh]">
+    <ScrollArea className="h-screnn md:h-[80vh]">
       <div className="flex flex-col justify-center items-center space-y-2">
         <h1 className={`${josefinSans.className} text-xl font-semibold my-4`}>Bem vindo de volta!</h1>
         <Form {...form}>
