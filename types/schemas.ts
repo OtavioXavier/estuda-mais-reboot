@@ -24,3 +24,6 @@ export const formSchemaLogin = z.object({
       .trim()
 })
 
+export const generateSummarySchema = z.object({
+   assunto: z.string().min(2, { message: 'é necessário um assunto para começarmos os resumos' })
+ })

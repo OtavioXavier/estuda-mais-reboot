@@ -1,13 +1,8 @@
 'use server'
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { generateObject } from 'ai';
-import { z } from 'zod';
-import { schemaSummaryQuestions } from '@/types/schemas';
+import { generateSummarySchema, schemaSummaryQuestions } from '@/types/schemas';
 import { SQ } from '@/types';
-
-const generateSummarySchema = z.object({
-  assunto: z.string().min(2, { message: 'é necessário um assunto para começarmos os resumos' })
-})
 
 export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
   try {
