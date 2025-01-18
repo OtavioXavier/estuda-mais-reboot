@@ -20,7 +20,6 @@ export default function Generator() {
 
     useEffect(() => {
         if (result) {
-            console.time("Validation and Routing");
             if (schemaSummaryQuestions.safeParse(result).success) {
                 setSummary(result as SQ);
                 setIsFinish(true);
@@ -28,7 +27,6 @@ export default function Generator() {
             } else {
                 console.log('erro de validacao');
             }
-            console.timeEnd("Validation and Routing");
         }
     }, [result, router, setSummary])
 
