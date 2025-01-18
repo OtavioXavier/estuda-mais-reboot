@@ -19,3 +19,8 @@ export type SQ = {
     questoes: Questao[]
 }
 
+export interface IMessageInput {
+    assunto: string;
+    site: string;
+}
+
