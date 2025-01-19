@@ -51,7 +51,7 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
 };
 
 const createSummary = (data: IMessageInput): Promise<Resumo> => {
-  const worker = new Worker(path.join(process.cwd(), './utils/threads/summary_thread.mjs'))
+  const worker = new Worker('./utils/threads/summary_thread.mjs')
   const p = new Promise<Resumo>((resolve, reject) => {
     worker.once('message', (message) => {
       return resolve(message)
@@ -63,7 +63,7 @@ const createSummary = (data: IMessageInput): Promise<Resumo> => {
 }
 
 const createQuestion = (data: IMessageInput): Promise<Questao[]> => {
-  const worker = new Worker(path.join(process.cwd(), './utils/threads/question_thread.mjs'))
+  const worker = new Worker('./utils/threads/question_thread.mjs')
   const p = new Promise<Questao[]>((resolve, reject) => {
     worker.once('message', (message) => {
       return resolve(message)
@@ -75,7 +75,7 @@ const createQuestion = (data: IMessageInput): Promise<Questao[]> => {
 }
 
 const searchWebsites = (data: IMessageInput): Promise<string[]> => {
-  const worker = new Worker(path.join(process.cwd(), './utils/threads/website_thread.mjs'))
+  const worker = new Worker('./utils/threads/website_thread.mjs')
   const p = new Promise<string[]>((resolve, reject) => {
     worker.once('message', (message) => {
       return resolve(message)
