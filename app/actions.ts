@@ -5,6 +5,7 @@ import { Worker } from 'node:worker_threads';
 
 export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
   try {
+    // console.time('generateSummary');
     const result = generateSummarySchema.safeParse(Object.fromEntries(data));
 
     if (!result.success) {
@@ -17,30 +18,30 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
 
     const websites = await searchWebsites(messageInput);
 
-    const resumos: Resumo[] = await Promise.all([
-      createSummary({ ...messageInput, site: websites[0] }),
-      createSummary({ ...messageInput, site: websites[1] }),
-      createSummary({ ...messageInput, site: websites[2] })
-    ])
+    const [resumos, questoes] = await Promise.all([
+      Promise.all([
+        createSummary({ ...messageInput, site: websites[0] }),
+        createSummary({ ...messageInput, site: websites[1] }),
+        createSummary({ ...messageInput, site: websites[2] }),
+      ]),
+      Promise.all([
+        createQuestion(messageInput),
+        createQuestion(messageInput),
+        createQuestion(messageInput),
+        createQuestion(messageInput),
+      ]),
+    ]);
 
-    const questoes: Questao[] = (
-      await Promise.all([
-      createQuestion(messageInput),
-      createQuestion(messageInput),
-      createQuestion(messageInput),
-      createQuestion(messageInput),
-    ])
-  ).flat();
+    const resumosResult: Resumo[] = resumos;
+    const questoesResult: Questao[] = questoes.flat();
 
     const sq: SQ = {
-      resumos,
-      questoes
+      resumos: resumosResult,
+      questoes: questoesResult
     }
 
     const validatedObject = schemaSummaryQuestions.parse(sq);
-    console.timeLog('generateSummary', 'Após validação do schema');
-    console.timeEnd('generateSummary');
-
+    // console.timeEnd('generateSummary');
     return validatedObject;
   } catch (error) {
     console.error('Erro durante a geração de resumos e questões: ', error);
@@ -83,4 +84,3 @@ const searchWebsites = (data: IMessageInput): Promise<string[]> => {
   worker.postMessage(data)
   return p;
 }
-
