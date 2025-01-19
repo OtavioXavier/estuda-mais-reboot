@@ -27,18 +27,14 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
       createSummary({ ...messageInput, site: websites[2] })
     ])
 
-    const questoes: Questao[] = await Promise.all([
+    const questoes: Questao[] = (
+      await Promise.all([
       createQuestion(messageInput),
       createQuestion(messageInput),
       createQuestion(messageInput),
       createQuestion(messageInput),
-      createQuestion(messageInput),
-      createQuestion(messageInput),
-      createQuestion(messageInput),
-      createQuestion(messageInput),
-      createQuestion(messageInput),
-      createQuestion(messageInput)
     ])
+  ).flat();
 
     const sq: SQ = {
       resumos,
@@ -90,9 +86,9 @@ const createSummary = (data: IMessageInput): Promise<Resumo> => {
   return p;
 }
 
-const createQuestion = (data: IMessageInput): Promise<Questao> => {
+const createQuestion = (data: IMessageInput): Promise<Questao[]> => {
   const worker = new Worker('./utils/threads/question_thread.mjs')
-  const p = new Promise<Questao>((resolve, reject) => {
+  const p = new Promise<Questao[]>((resolve, reject) => {
     worker.once('message', (message) => {
       return resolve(message)
     })

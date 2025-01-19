@@ -10,15 +10,17 @@ if (parentPort) {
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY?.toString() || '');
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
-    const prompt = `crie uma questao nova sobre: ${assunto} usando este schema json
-          {
+    const prompt = `crie 3 novas questões novas sobre: ${assunto} usando este schema json
+          questoes=[{
             questao:
             id: string,
             numero(deve ser ${threadId}): number,
             titulo(Título da questao): string,
             resposta(alternativa correta): string,
             alternativas(A, B, C, D): string[]
-          }
+  }
+      ...      
+  ]
           `;
 
     const response = await model.generateContent(prompt);
@@ -27,9 +29,8 @@ if (parentPort) {
     if (!responseText) {
       throw new Error('A resposta do modelo não contém o texto esperado.');
     }
-
     const cleanedText = responseText.replace(/```json|```/g, '').trim();
     const responseData = JSON.parse(cleanedText);
-    parentPort?.postMessage(responseData.questao)
+    parentPort?.postMessage(responseData.questoes)
   })
 }

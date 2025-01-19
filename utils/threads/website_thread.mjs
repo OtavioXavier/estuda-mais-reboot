@@ -28,7 +28,6 @@ if (parentPort) {
 
     const cleanedText = responseText.replace(/```json|```/g, '').trim();
     const responseData = JSON.parse(cleanedText);
-
     console.timeEnd('achando sites-' + threadId)
     parentPort?.postMessage(responseData.sites)
   })
