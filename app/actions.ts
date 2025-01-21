@@ -1,11 +1,12 @@
 'use server'
+
 import { generateSummarySchema, schemaSummaryQuestions } from '@/types/schemas';
 import { IMessageInput, Questao, Resumo, SQ } from '@/types';
 import { Worker } from 'node:worker_threads';
+import path from 'path';
 
 export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
   try {
-    // console.time('generateSummary');
     const result = generateSummarySchema.safeParse(Object.fromEntries(data));
 
     if (!result.success) {
@@ -41,7 +42,6 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
     }
 
     const validatedObject = schemaSummaryQuestions.parse(sq);
-    // console.timeEnd('generateSummary');
     return validatedObject;
   } catch (error) {
     console.error('Erro durante a geração de resumos e questões: ', error);
@@ -50,7 +50,7 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
 };
 
 const createSummary = (data: IMessageInput): Promise<Resumo> => {
-  const worker = new Worker('../utils/threads/summary_thread.mjs')
+  const worker = new Worker(path.resolve(__dirname, '../utils/threads/summary_thread.mjs'))
   const p = new Promise<Resumo>((resolve, reject) => {
     worker.once('message', (message) => {
       return resolve(message)
@@ -62,7 +62,7 @@ const createSummary = (data: IMessageInput): Promise<Resumo> => {
 }
 
 const createQuestion = (data: IMessageInput): Promise<Questao[]> => {
-  const worker = new Worker('../utils/threads/question_thread.mjs')
+  const worker = new Worker(path.resolve(__dirname, '../utils/threads/question_thread.mjs'))
   const p = new Promise<Questao[]>((resolve, reject) => {
     worker.once('message', (message) => {
       return resolve(message)
@@ -74,7 +74,7 @@ const createQuestion = (data: IMessageInput): Promise<Questao[]> => {
 }
 
 const searchWebsites = (data: IMessageInput): Promise<string[]> => {
-  const worker = new Worker('../utils/threads/website_thread.mjs')
+  const worker = new Worker(path.resolve(__dirname, '../utils/threads/website_thread.mjs'))
   const p = new Promise<string[]>((resolve, reject) => {
     worker.once('message', (message) => {
       return resolve(message)
