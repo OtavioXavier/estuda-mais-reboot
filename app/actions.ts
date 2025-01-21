@@ -2,7 +2,6 @@
 import { generateSummarySchema, schemaSummaryQuestions } from '@/types/schemas';
 import { IMessageInput, Questao, Resumo, SQ } from '@/types';
 import { Worker } from 'node:worker_threads';
-import path from 'path';
 
 export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
   try {
