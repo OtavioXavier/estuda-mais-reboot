@@ -1,9 +1,8 @@
 'use server'
 
 import { generateSummarySchema, schemaSummaryQuestions } from '@/types/schemas';
-import { IMessageInput, Questao, Resumo, SQ } from '@/types';
+import { IMessageInput, Questao, Resumo, type SQ } from '@/types';
 import { Worker } from 'node:worker_threads';
-import path from 'path';
 
 export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
   try {
@@ -15,21 +14,18 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
 
     const { assunto } = result.data;
 
-    const messageInput: IMessageInput = { assunto, site: '' }
-
-    const websites = await searchWebsites(messageInput);
+    const websites = await searchWebsites(assunto);
 
     const [resumos, questoes] = await Promise.all([
       Promise.all([
-        createSummary({ ...messageInput, site: websites[0] }),
-        createSummary({ ...messageInput, site: websites[1] }),
-        createSummary({ ...messageInput, site: websites[2] }),
+        createSummary({ assunto, site: websites[0] }),
+        createSummary({ assunto, site: websites[1] }),
+        createSummary({ assunto, site: websites[2] }),
       ]),
       Promise.all([
-        createQuestion(messageInput),
-        createQuestion(messageInput),
-        createQuestion(messageInput),
-        createQuestion(messageInput),
+        createQuestions(assunto),
+        createQuestions(assunto),
+        createQuestions(assunto),
       ]),
     ]);
 
@@ -49,38 +45,74 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
   }
 };
 
-const createSummary = (data: IMessageInput): Promise<Resumo> => {
-  const worker = new Worker(path.resolve(process.cwd(), 'app/utils/threads/summary_thread.mjs'))
-  const p = new Promise<Resumo>((resolve, reject) => {
-    worker.once('message', (message) => {
-      return resolve(message)
+function searchWebsites(assunto: string): Promise<string[]> {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker("./utils/website_thread.mjs");
+
+    worker.on("message", (websites: string[]) => {
+      resolve(websites);
     })
-    worker.once('error', reject)
-  })
-  worker.postMessage(data)
-  return p;
+
+    worker.on('error', (error: Error) => {
+      console.error(`Worker error: ${error}`);
+      reject(error);
+    });
+
+    worker.on('exit', (code: number) => {
+      if (code !== 0) {
+        console.log(`Worker exited with code: ${code}`);
+        reject(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
+
+    worker.postMessage(assunto);
+  });
 }
 
-const createQuestion = (data: IMessageInput): Promise<Questao[]> => {
-  const worker = new Worker(path.resolve(process.cwd(), 'app/utils/threads/question_thread.mjs'))
-  const p = new Promise<Questao[]>((resolve, reject) => {
-    worker.once('message', (message) => {
-      return resolve(message)
+function createSummary(messageInput: IMessageInput): Promise<Resumo> {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker("./utils/summary_thread.mjs");
+
+    worker.on("message", (resumo: Resumo) => {
+      resolve(resumo);
     })
-    worker.once('error', reject)
-  })
-  worker.postMessage(data)
-  return p;
+
+    worker.on('error', (error: Error) => {
+      console.error(`Worker error: ${error}`);
+      reject(error);
+    });
+
+    worker.on('exit', (code: number) => {
+      if (code !== 0) {
+        console.log(`Worker exited with code: ${code}`);
+        reject(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
+
+    worker.postMessage(messageInput);
+  });
 }
 
-const searchWebsites = (data: IMessageInput): Promise<string[]> => {
-  const worker = new Worker(path.resolve(process.cwd(), 'app/utils/threads/website_thread.mjs'))
-  const p = new Promise<string[]>((resolve, reject) => {
-    worker.once('message', (message) => {
-      return resolve(message)
+function createQuestions(assunto: string): Promise<Questao[]> {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker("./utils/question_thread.mjs");
+
+    worker.on("message", (question: Questao[]) => {
+      resolve(question);
     })
-    worker.once('error', reject)
-  })
-  worker.postMessage(data)
-  return p;
+
+    worker.on('error', (error: Error) => {
+      console.error(`Worker error: ${error}`);
+      reject(error);
+    });
+
+    worker.on('exit', (code: number) => {
+      if (code !== 0) {
+        console.log(`Worker exited with code: ${code}`);
+        reject(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
+
+    worker.postMessage(assunto);
+  });
 }
