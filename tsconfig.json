@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/utils/threads/summary_thread.mjs", "**/utils/threads/question_thread.mjs", "**/utils/threads/website_thread.mjs", "app/website_thread.js", "app/summary_thread.js", "app/threads/question_thread.js", "utils/website_thread.js", "utils/summary_thread.mjs", "utils/question_thread.mjs"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/utils/threads/summary_thread.mjs", "**/utils/threads/question_thread.mjs", "**/utils/threads/website_thread.mjs","utils/summary_thread.mjs", "utils/question_thread.mjs"],
   "exclude": ["node_modules"]
 }
