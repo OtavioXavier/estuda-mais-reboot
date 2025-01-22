@@ -3,6 +3,7 @@
 import { generateSummarySchema, schemaSummaryQuestions } from '@/types/schemas';
 import { IMessageInput, Questao, Resumo, type SQ } from '@/types';
 import { Worker } from 'node:worker_threads';
+import { URL } from 'node:url';
 
 export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
   try {
@@ -47,7 +48,7 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
 
 function searchWebsites(assunto: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
-    const worker = new Worker("./utils/website_thread.mjs");
+    const worker = new Worker(new URL("./utils/website_thread.mjs"));
 
     worker.on("message", (websites: string[]) => {
       resolve(websites);
@@ -71,7 +72,7 @@ function searchWebsites(assunto: string): Promise<string[]> {
 
 function createSummary(messageInput: IMessageInput): Promise<Resumo> {
   return new Promise((resolve, reject) => {
-    const worker = new Worker("./utils/summary_thread.mjs");
+    const worker = new Worker(new URL("./utils/summary_thread.mjs"));
 
     worker.on("message", (resumo: Resumo) => {
       resolve(resumo);
@@ -95,7 +96,7 @@ function createSummary(messageInput: IMessageInput): Promise<Resumo> {
 
 function createQuestions(assunto: string): Promise<Questao[]> {
   return new Promise((resolve, reject) => {
-    const worker = new Worker("./utils/question_thread.mjs");
+    const worker = new Worker(new URL("./utils/question_thread.mjs"));
 
     worker.on("message", (question: Questao[]) => {
       resolve(question);
