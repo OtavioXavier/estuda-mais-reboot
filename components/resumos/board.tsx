@@ -1,4 +1,5 @@
 'use client'
+
 import { useSummary } from "@/context/SummaryContext";
 import ListItem from "./list-item";
 import { useEffect, useMemo, useState } from "react";
@@ -27,6 +28,10 @@ export default function Board() {
         const selectedSummary = resumos.find((resumo) => resumo.id === selected) ?? fakeSummary;
         setSummary(selectedSummary);
     }, [selected, fakeSummary, resumos])
+
+    if (!data) {
+        return <div>Carregando...</div>;
+    }
 
     return (
         <main className="min-h-screen flex w-full">
