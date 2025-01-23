@@ -41,6 +41,7 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
     return validatedObject;
   } catch (error) {
     console.error('Erro durante a geração de resumos e questões: ', error);
+    alert(`${error}`);
     return null;
   }
 };
