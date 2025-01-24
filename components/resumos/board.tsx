@@ -8,6 +8,8 @@ import { Resumo } from "@/types";
 import QuestionsList from "./questions-list";
 import { Button } from "../ui/button";
 import { ListRestart, RotateCcw } from "lucide-react";
+import ActionButton from "./action-button";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 export default function Board() {
     const { data } = useSummary();
@@ -34,8 +36,8 @@ export default function Board() {
     }
 
     return (
-        <main className="min-h-screen flex w-full">
-            <aside className="w-64 min-h-screen flex justify-center p-4">
+        <main className="min-h-screen md:flex w-full">
+            <aside className="hidden md:flex w-64 min-h-screen justify-center p-4">
                 <ul className="space-y-2">
                     {resumos.map((resumo, i) => (
                         <ListItem isSelected={selected === resumo.id} site={resumo.site} key={i} onClick={() => setSelected(resumo.id)} />
@@ -58,7 +60,37 @@ export default function Board() {
 
                 </ul>
             </aside>
-            {selected === 'questoes' ? <QuestionsList questoes={questoes} /> : <MainText {...summary} />}
+            <div className="mb-48 md:mb-0">
+                {selected === 'questoes' ? <QuestionsList questoes={questoes} /> : <MainText {...summary} />}
+            </div>
+
+            <footer className="bg-main text-white w-full p-4 md:hidden h-24 rounded-t-xl fixed bottom-0 left-0 flex items-center justify-center">
+                <Carousel opts={{
+                    align: "center",
+                    loop: true,
+                }}
+                    className="w-full max-w-sm flex space-x-8"
+                >
+                    <ActionButton type="refresh" />
+                    <CarouselContent className="-ml-1">
+                        {resumos.map((resumo, i) => (
+                            <CarouselItem className={"basis-24"} key={i}>
+                                <ListItem isSelected={selected === resumo.id} site={resumo.site} onClick={() => setSelected(resumo.id)} />
+                            </CarouselItem>
+                        ))}
+                        <CarouselItem className="basis-24">
+                            <ListItem
+                                type="questions"
+                                isSelected={selected === 'questoes'}
+                                onClick={() => setSelected('questoes')}
+                            />
+                        </CarouselItem>
+                    </CarouselContent>
+                    <span className="">
+                        <ActionButton type="restart" />
+                    </span>
+                </Carousel>
+            </footer>
         </main>
     )
 }

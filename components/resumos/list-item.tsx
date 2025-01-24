@@ -12,12 +12,15 @@ interface ListItemProps {
 
 export default function ListItem({ isSelected, site, type = 'summary', onClick }: ListItemProps) {
     return (
-        <li>
-            <Button className={clsx(isSelected ? 'bg-main hover:bg-main hover:opacity-80' : 'bg-transparent border border-zinc-400 text-zinc-400 hover:bg-main  hover:text-white', "h-12 w-56 justify-normal gap-4  transition-all rounded-xl")} onClick={onClick}>
-                {type === 'summary' ? <ScrollText /> : <ClipboardList />}
+        <Button className={clsx(
+            isSelected ?
+                'bg-main hover:bg-main hover:opacity-80' :
+                'bg-transparent border border-zinc-400 text-zinc-400 hover:bg-main  hover:text-white',
+            "h-12 md:w-56 justify-normal gap-4  transition-all rounded-xl"
+        )} onClick={onClick}>
+            {type === 'summary' ? <ScrollText /> : <ClipboardList />}
 
-                <span className={`${crimsonText.className} truncate max-w-full overflow-hidden text-ellipsis`}>{type === 'summary' ? site : 'Questões'}</span>
-            </Button>
-        </li>
+            <span className={`${crimsonText.className} hidden md:block truncate max-w-full overflow-hidden text-ellipsis`}>{type === 'summary' ? site : 'Questões'}</span>
+        </Button>
     )
 }

@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.18.0
+ARG NODE_VERSION=22.12.0
 FROM node:${NODE_VERSION}-slim AS base
 
 LABEL fly_launch_runtime="Next.js"
@@ -28,7 +28,13 @@ RUN npm ci --include=dev
 COPY . .
 
 # Build application
-RUN npx next build --experimental-build-mode compile
+RUN --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY \
+    --mount=type=secret,id=NEXT_PUBLIC_SUPABASE_ANON_KEY \
+    --mount=type=secret,id=NEXT_PUBLIC_SUPABASE_URL \
+    NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY="$(cat /run/secrets/NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY)" \
+    NEXT_PUBLIC_SUPABASE_ANON_KEY="$(cat /run/secrets/NEXT_PUBLIC_SUPABASE_ANON_KEY)" \
+    NEXT_PUBLIC_SUPABASE_URL="$(cat /run/secrets/NEXT_PUBLIC_SUPABASE_URL)" \
+    npx next build --experimental-build-mode compile
 
 # Remove development dependencies
 RUN npm prune --omit=dev
@@ -39,6 +45,9 @@ FROM base
 
 # Copy built application
 COPY --from=build /app /app
+
+# Adjust entrypoint to be executable on Linux
+RUN chmod +x ./docker-entrypoint.js
 
 # Entrypoint sets up the container.
 ENTRYPOINT [ "/app/docker-entrypoint.js" ]
