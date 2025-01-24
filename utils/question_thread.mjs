@@ -3,21 +3,22 @@
 import { parentPort, threadId } from 'node:worker_threads'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-parentPort?.on('message', async ({ assunto }) => {
+parentPort?.on('message', async ( assunto ) => {
   console.time('criando questao-' + threadId)
 
   const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY?.toString() || '');
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
   const prompt = `crie 3 novas questões novas sobre: ${assunto} usando este schema json
-          questoes=[{
+          questoes=[
+          {
             questao:
             id: string,
             numero(deve ser ${threadId}): number,
             titulo(Título da questao): string,
             resposta(alternativa correta): string,
             alternativas(A, B, C, D): string[]
-                   }
+            }
             ...      
             ]
           `;
