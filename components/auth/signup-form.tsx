@@ -9,41 +9,20 @@ import { Checkbox } from "../ui/checkbox";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
-
-const formSchema = z.object({
-  nome: z
-    .string({ required_error: "Nome é necessário.", })
-    .min(2, { message: 'Nome precisa de ao menos 2 caracteres.' })
-    .trim(),
-  email: z.string({ required_error: "Email é necessário.", }).email({ message: 'Por favor insira um email válido.' }).trim(),
-  password: z
-    .string({ required_error: "Senha é necessária.", })
-    .min(8, { message: 'Precisa de ao menos 8 caracteres' })
-    .regex(/[a-zA-Z]/, { message: 'Deve conter ao menos uma letra.' })
-    .regex(/[0-9]/, { message: 'Deve conter ao menos um numero' })
-    .regex(/[^a-zA-Z0-9]/, {
-      message: 'Deve conter ao menos um caractere especial',
-    })
-    .trim(),
-  termo: z.boolean().refine((val) => val === true, {
-    message: "Aceite o termo para continuar.",
-  }),
-})
+import { formSchemaSignup } from "@/types/schemas";
+import { signup } from "@/app/actions";
 
 export default function CadastrarForm() {
-  const router = useRouter();
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemaSignup>>({
+    resolver: zodResolver(formSchemaSignup),
     defaultValues: {
       email: "",
       password: "",
@@ -52,41 +31,19 @@ export default function CadastrarForm() {
     }
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchemaSignup>) => {
 
     try {
-      const { email, password, nome, termo } = values;
-      const supabase = createClientComponentClient();
+      signup(values);
 
-      const { error, data: { user } } = await supabase.auth.signUp({
-        email,
-        password,
-
+      toast({
+        title: "Sucesso",
+        description: "Cadastro concluido com sucesso!"
       })
+      form.reset();
+    }
+    catch (error) {
 
-      if (error) throw new Error(`Erro ao fazer cadastro: ${error.message}`);
-
-
-      if (user) {
-        const { error } = await supabase
-          .from("estudante")
-          .insert({
-            email,
-            nome,
-            termo
-          })
-
-        if (error) throw new Error(`Erro ao inserir dados na tabela: ${error.message}`);
-
-        form.reset();
-        toast({
-          title: "Sucesso",
-          description: "Cadastro concluido com sucesso!"
-        })
-        router.replace("/user-app");
-      }
-
-    } catch (error) {
       toast({
         title: "Erro",
         variant: "destructive",

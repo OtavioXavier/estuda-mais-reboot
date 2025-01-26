@@ -6,7 +6,7 @@ import { Worker } from 'node:worker_threads';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import type { formSchemaLogin } from "@/types/schemas";
+import type { formSchemaLogin, formSchemaSignup } from "@/types/schemas";
 import { z } from 'zod';
 
 export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
@@ -134,6 +134,39 @@ export const login = async (formData: z.infer<typeof formSchemaLogin>) => {
 
   if (error) {
     redirect('/error')
+  }
+
+  revalidatePath('/user-app', 'layout')
+  redirect('/user-app')
+}
+
+export const signup = async (formData: z.infer<typeof formSchemaSignup>) => {
+  const supabase = await createClient()
+
+  const registerData = {
+    email: formData.email,
+    password: formData.password,
+  }
+
+  const { error, data: { user } } = await supabase.auth.signUp(registerData);
+
+  if (user) {
+    const { error } = await supabase
+      .from('estudante')
+      .insert({
+        email: formData.email,
+        nome: formData.nome,
+        termo: formData.termo
+      });
+    if (error) {
+      throw new Error(`Erro ao inserir dados na tabela: ${error?.message}`);
+    }
+  } else {
+    throw new Error(`Erro ao fazer cadastro: ${error?.message}`);
+  }
+
+  if (error) {
+    redirect('/error');
   }
 
   revalidatePath('/user-app', 'layout')
