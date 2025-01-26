@@ -16,38 +16,19 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { createClientComponentClient, type User } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/client";
+import { type User } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
 
-export function UserNav() {
+interface UserNavProps {
+    user: User | null;
 
-    const [user, setUser] = useState<User | null>(null);
+}
+
+export function UserNav({ user }: UserNavProps) {
+
     const router = useRouter();
-    const supabase = useMemo(() => createClientComponentClient(), []);
-
-
-    const getUser = useCallback(async () => {
-        try {
-            const {
-                data: { user },
-                error
-            } = await supabase.auth.getUser();
-
-            if (error) {
-                throw new Error(`obtendo o usuario: ${error}`)
-            } else {
-                setUser(user);
-            }
-
-        } catch (error) {
-            console.log("ocerreu um erro em user-nav ", error)
-        };
-    }, [supabase])
-
-    useEffect(() => {
-        getUser();
-    }, [getUser])
+    const supabase = createClient();
 
     const handleSignout = async () => {
         await supabase.auth.signOut();
