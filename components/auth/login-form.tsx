@@ -7,16 +7,14 @@ import { Input } from "../ui/input";
 import { josefinSans } from "@/utils/fonts";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import type { formSchemaLogin } from "@/types/schemas";
 import { ScrollArea } from "../ui/scroll-area";
+import { login } from "@/app/actions";
 
 export default function LoginForm() {
-  const router = useRouter();
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -31,24 +29,13 @@ export default function LoginForm() {
   const onSubmit = async (values: z.infer<typeof formSchemaLogin>) => {
 
     try {
-      const { email, password } = values;
-      const supabase = createClientComponentClient();
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      })
-
-      if (error) throw new Error(`Erro ao fazer login: ${error.message}`);
-
-      form.reset();
+      login(values);
 
       toast({
         title: "Sucesso",
         description: "Login concluido com sucesso!"
       })
 
-      router.replace("/user-app");
 
     } catch (error) {
       toast({
