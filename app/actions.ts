@@ -3,6 +3,11 @@
 import { generateSummarySchema, schemaSummaryQuestions } from '@/types/schemas';
 import { IMessageInput, Questao, Resumo, type SQ } from '@/types';
 import { Worker } from 'node:worker_threads';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+import type { formSchemaLogin } from "@/types/schemas";
+import { z } from 'zod';
 
 export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
   try {
@@ -115,4 +120,22 @@ function createQuestions(assunto: string): Promise<Questao[]> {
 
     worker.postMessage(assunto);
   });
+}
+
+export const login = async (formData: z.infer<typeof formSchemaLogin>) => {
+  const supabase = await createClient()
+
+  const data = {
+    email: formData.email,
+    password: formData.password,
+  }
+
+  const { error } = await supabase.auth.signInWithPassword(data)
+
+  if (error) {
+    redirect('/error')
+  }
+
+  revalidatePath('/user-app', 'layout')
+  redirect('/user-app')
 }
