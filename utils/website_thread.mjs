@@ -1,7 +1,7 @@
 import { parentPort } from 'node:worker_threads'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export default parentPort?.on("message", async ({ assunto }) => {
+export default parentPort?.on("message", async (assunto) => {
 
   const genAI = new GoogleGenerativeAI(
     process.env.NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY?.toString() || ''
