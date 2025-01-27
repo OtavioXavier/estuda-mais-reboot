@@ -1,7 +1,9 @@
+'use server';
+
 import { parentPort } from 'node:worker_threads'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export default parentPort?.on("message", async (assunto) => {
+parentPort?.on("message", async (assunto) => {
 
   const genAI = new GoogleGenerativeAI(
     process.env.NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY?.toString() || ''
@@ -16,10 +18,17 @@ export default parentPort?.on("message", async (assunto) => {
             ...
           ]
           `;
+  try {
+    const response = await model.generateContent(prompt);
+    const responseText = response.response.text();
+    const cleanedText = responseText.replace(/```json|```/g, '').trim();
+    const responseData = JSON.parse(cleanedText);
+    parentPort?.postMessage(responseData.sites)
+  } catch (error) {
+    parentPort?.postMessage({ error: error.message });
+  } finally {
+    parentPort?.close();
+    process.exit(0);
+  }
 
-  const response = await model.generateContent(prompt);
-  const responseText = response.response.text();
-  const cleanedText = responseText.replace(/```json|```/g, '').trim();
-  const responseData = JSON.parse(cleanedText);
-  parentPort?.postMessage(responseData.sites)
 })
