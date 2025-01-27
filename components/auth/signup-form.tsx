@@ -96,7 +96,7 @@ export default function CadastrarForm() {
                     <FormControl >
                       <div className={`${josefinSans.className} bg-secondaryWhite w-96 h-12 flex items-center justify-between rounded-lg`}>
                         <Input type={showPassword ? "text" : "password"} placeholder="Senha" {...field} className={`${josefinSans.className} focus:border-main bg-transparent  w-80 h-12 `} />
-                        <Button onClick={() => setShowPassword(!showPassword)} variant={"ghost"}>{showPassword ? <Eye size={16} color="#007BFF" /> : <EyeClosed size={16} color="#007BFF" />}</Button>
+                        <Button type="button" onClick={() => setShowPassword(!showPassword)} variant={"ghost"}>{showPassword ? <Eye size={16} color="#007BFF" /> : <EyeClosed size={16} color="#007BFF" />}</Button>
                       </div>
                     </FormControl>
                     <FormMessage />
