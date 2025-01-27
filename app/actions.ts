@@ -4,7 +4,6 @@ import { generateSummarySchema, schemaSummaryQuestions } from '@/types/schemas';
 import { IMessageInput, Questao, Resumo, type SQ } from '@/types';
 import { Worker } from 'node:worker_threads';
 import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import type { formSchemaLogin, formSchemaSignup } from "@/types/schemas";
 import { z } from 'zod';
