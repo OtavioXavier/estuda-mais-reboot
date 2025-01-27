@@ -19,6 +19,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
 
+
   const form = useForm<z.infer<typeof formSchemaLogin>>({
     defaultValues: {
       email: "",
@@ -29,20 +30,20 @@ export default function LoginForm() {
   const onSubmit = async (values: z.infer<typeof formSchemaLogin>) => {
 
     try {
-      login(values);
+      await login(values);
 
       toast({
         title: "Sucesso",
         description: "Login concluido com sucesso!"
-      })
+      });
 
 
     } catch (error) {
       toast({
         title: "Erro",
         variant: "destructive",
-        description: `falha no sistema ${error}`
-      })
+        description: `falha ao fazer login: ${error}`
+      });
     }
   }
 

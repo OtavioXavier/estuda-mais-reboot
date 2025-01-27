@@ -123,21 +123,20 @@ function createQuestions(assunto: string): Promise<Questao[]> {
 }
 
 export const login = async (formData: z.infer<typeof formSchemaLogin>) => {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
   const data = {
     email: formData.email,
     password: formData.password,
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect('/error')
+    throw new Error(`${error.message}`);
   }
 
-  revalidatePath('/user-app', 'layout')
-  redirect('/user-app')
+  revalidatePath('/', "page");
 }
 
 export const signup = async (formData: z.infer<typeof formSchemaSignup>) => {
@@ -166,9 +165,9 @@ export const signup = async (formData: z.infer<typeof formSchemaSignup>) => {
   }
 
   if (error) {
-    redirect('/error');
+    throw new Error(`${error.message}`)
   }
 
-  revalidatePath('/user-app', 'layout')
-  redirect('/user-app')
+  revalidatePath('/', "page");
+
 }

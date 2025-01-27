@@ -34,7 +34,7 @@ export default function CadastrarForm() {
   const onSubmit = async (values: z.infer<typeof formSchemaSignup>) => {
 
     try {
-      signup(values);
+      await signup(values);
 
       toast({
         title: "Sucesso",
