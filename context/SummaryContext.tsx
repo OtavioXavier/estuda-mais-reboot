@@ -6,6 +6,7 @@ import { SQ } from '@/types';
 interface SummaryContextType {
     data: SQ;
     setSummary: (data: SQ) => void;
+    isEmpty: boolean;
 }
 
 const SummaryContext = createContext<SummaryContextType | undefined>(undefined);
@@ -29,8 +30,10 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const isEmpty = data.resumos.length === 0 && data.questoes.length === 0;
+
     return (
-        <SummaryContext.Provider value={{ data, setSummary: saveSummary }}>
+        <SummaryContext.Provider value={{ data, setSummary: saveSummary, isEmpty }}>
             {children}
         </SummaryContext.Provider>
     );
