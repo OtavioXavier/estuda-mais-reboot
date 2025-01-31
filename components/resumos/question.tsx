@@ -16,12 +16,20 @@ interface QuestionProps {
 
 export default function Question({ questao, corrigir }: QuestionProps) {
     const [alternativa, setAlternativa] = useState<string>('');
+    const [feedback, setFeedback] = useState<string>('');
 
+    const handleValueChange = (value: string) => {
+        setAlternativa(value);
+        if (corrigir) {
+            setFeedback(value === questao.resposta ? 'correta' : 'incorreta');
+        }
+    };
+    console.log(questao.resposta)
     return (
         <li>
             <Card className="p-4 transition-all">
-                <CardTitle className={`${josefinSans.className}`}>{questao.titulo}</CardTitle>
-                <RadioGroup disabled={corrigir} onValueChange={(value) => setAlternativa(value)} className="p-4 transition-all">
+                <CardTitle className={`${josefinSans.className}`}>{questao.pergunta}</CardTitle>
+                <RadioGroup disabled={corrigir} onValueChange={handleValueChange} className="p-4 transition-all">
                     {questao.alternativas?.map((alternativa, i) => (
                         <div key={i} className="flex items-center space-x-2">
                             <RadioGroupItem
@@ -38,7 +46,7 @@ export default function Question({ questao, corrigir }: QuestionProps) {
                         )}>
                             <CheckCheck />
                             <p className={`${josefinSans.className}`}>
-                                Questão {alternativa === questao.resposta ? 'correta' : 'incorreta'} {questao.resposta}
+                                Questão {feedback} {feedback === 'incorreta' && `- Resposta correta: ${questao.resposta}`}
                             </p>
                         </div>}
                 </RadioGroup>

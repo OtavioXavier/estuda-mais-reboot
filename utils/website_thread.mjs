@@ -9,7 +9,7 @@ parentPort?.on("message", async (assunto) => {
     process.env.NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY?.toString() || ''
   );
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
-  const prompt = `me de o nome dos 3 melores sites para estudar ${assunto} usando este schema de json  
+  const prompt = `me de o nome dos 3 melores artigos para estudar ${assunto} usando este schema de json  
           sites: string[]
 
           um exemplo:
