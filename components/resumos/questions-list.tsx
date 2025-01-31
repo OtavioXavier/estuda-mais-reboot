@@ -24,7 +24,7 @@ export default function QuestionsList({ questoes }: QuestionsListProps) {
                     ))}
                 </ul>
                 <Button onClick={() => { setCorrigir(!corrigir) }} className={clsx(corrigir ? 'bg-red-500 hover:bg-red-500 ' : 'bg-main hover:bg-main',
-                    `transition-all hover:bg-opacity-80 float-end m-4 w-48 h-12 font-bold rounded-xl disabled:bg-transparent disabled:border disabled:border-zinc-500 disabled:text-zinc-400 disabled:border-text-z `
+                    `transition-all hover:bg-opacity-80 float-end m-4 w-48 h-12 font-bold rounded-xl disabled:bg-transparent disabled:border disabled:border-zinc-500 disabled:text-zinc-400 disabled:border-text-z absolute z-20 bottom-0 right-4`
                 )}>
                     {corrigir ? 'Cancelar' : 'Corrigir'}
                     {corrigir ? <X /> : <CheckCheck />}
