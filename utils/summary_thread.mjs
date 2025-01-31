@@ -11,13 +11,13 @@ parentPort?.on('message', async (messageInput) => {
     {
     resumo:
     id: string,
-    site(Nome do site): string,
-    titulo(Título relevante): string.
+    site(nome do site/artigo): string,
+    titulo(Titulo do resumo): string.
     texto(Resumo do texto (400 palavras)): string,
     link(Link para o texto original): string,
     }
           
-    a partir do site: ${messageInput.site}
+    a partir do artigo: ${messageInput.site}
           `;
     try {
         const response = await model.generateContent(prompt);
