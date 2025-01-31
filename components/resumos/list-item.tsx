@@ -1,6 +1,5 @@
 import { ClipboardList, ScrollText } from "lucide-react";
 import { Button } from "../ui/button";
-import { crimsonText } from "@/utils/fonts";
 import clsx from "clsx";
 
 interface ListItemProps {
@@ -20,7 +19,7 @@ export default function ListItem({ isSelected, site, type = 'summary', onClick }
         )} onClick={onClick}>
             {type === 'summary' ? <ScrollText /> : <ClipboardList />}
 
-            <span className={`${crimsonText.className} hidden md:block truncate max-w-full overflow-hidden text-ellipsis`}>{type === 'summary' ? site : 'Questões'}</span>
+            <span className={` hidden md:block truncate max-w-full overflow-hidden text-ellipsis`}>{type === 'summary' ? site : 'Questões'}</span>
         </Button>
     )
 }
