@@ -14,7 +14,7 @@ parentPort?.on('message', async (assunto) => {
             questao:
             id: string,
             numero(deve ser ${threadId}): number,
-            titulo(Título da questao): string,
+            pergunta(pergunta da questao): string,
             resposta(alternativa correta): string,
             alternativas(A, B, C, D): string[]
             }

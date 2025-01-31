@@ -11,7 +11,7 @@ export const schemaSummaryQuestions = z.object({
    questoes: z.object({
       id: z.string(),
       numero: z.number(),
-      titulo: z.string(),
+      pergunta: z.string(),
       resposta: z.string(),
       alternativas: z.string().array(),
    }).array(),
