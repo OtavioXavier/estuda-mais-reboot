@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 import MainText from "./main-text";
 import { Resumo } from "@/types";
 import QuestionsList from "./questions-list";
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 export default function Board() {
     const { data } = useSummary();
@@ -37,7 +36,10 @@ export default function Board() {
             <aside className="hidden md:flex w-64 min-h-screen justify-center p-4">
                 <ul className="space-y-2">
                     {resumos.map((resumo, i) => (
-                        <ListItem isSelected={selected === resumo.id} site={resumo.site} key={i} onClick={() => setSelected(resumo.id)} />
+                        <ListItem
+                            isSelected={selected === resumo.id}
+                            site={resumo.site} key={i}
+                            onClick={() => setSelected(resumo.id)} />
                     ))}
 
                     <ListItem
@@ -53,29 +55,19 @@ export default function Board() {
             </div>
 
             <footer className="bg-main text-white w-full p-4 md:hidden h-24 rounded-t-xl fixed bottom-0 left-0 flex items-center justify-center">
-                <Carousel opts={{
-                    align: "center",
-                    loop: true,
-                }}
-                    className="w-full max-w-sm flex space-x-8"
-                >
-                    <CarouselContent className="-ml-1">
-                        {resumos.map((resumo, i) => (
-                            <CarouselItem className={"basis-24"} key={i}>
-                                <ListItem isSelected={selected === resumo.id} site={resumo.site} onClick={() => setSelected(resumo.id)} />
-                            </CarouselItem>
-                        ))}
-                        <CarouselItem className="basis-24">
-                            <ListItem
-                                type="questions"
-                                isSelected={selected === 'questoes'}
-                                onClick={() => setSelected('questoes')}
-                            />
-                        </CarouselItem>
-                    </CarouselContent>
-                    <span className="">
-                    </span>
-                </Carousel>
+                <div className="flex space-x-8">
+                    {resumos.map((resumo, i) => (
+                        <ListItem
+                            key={i}
+                            isSelected={selected === resumo.id}
+                            site={resumo.site}
+                            onClick={() => setSelected(resumo.id)} />
+                    ))}
+                    <ListItem
+                        type="questions"
+                        isSelected={selected === 'questoes'}
+                        onClick={() => setSelected('questoes')} />
+                </div>
             </footer>
         </main>
     )

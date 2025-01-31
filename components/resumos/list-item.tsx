@@ -19,7 +19,7 @@ export default function ListItem({ isSelected, site, type = 'summary', onClick }
         )} onClick={onClick}>
             {type === 'summary' ? <ScrollText /> : <ClipboardList />}
 
-            <span className={` hidden md:block truncate max-w-full overflow-hidden text-ellipsis`}>{type === 'summary' ? site : 'Questões'}</span>
+            <span className={`hidden md:block truncate max-w-full overflow-hidden text-ellipsis`}>{type === 'summary' ? site : 'Questões'}</span>
         </Button>
     )
 }
