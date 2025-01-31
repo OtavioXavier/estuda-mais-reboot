@@ -41,10 +41,11 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
       questoes: questoesResult
     }
 
+
     const validatedObject = schemaSummaryQuestions.parse(sq);
     return validatedObject;
   } catch (error) {
-    console.error('Erro durante a geração de resumos e questões: ', error);
+    console.log('Erro durante a geração de resumos e questões: ', error);
     return null;
   }
 };
