@@ -13,8 +13,9 @@ import { useSummary } from "@/context/SummaryContext";
 
 export default function Generator() {
     const [isFinish, setIsFinish] = useState<boolean>(false);
-    const { setSummary } = useSummary();
+    const { setSummary, setSubject } = useSummary();
     const router = useRouter();
+    const [localSubject, setLocalSubject] = useState<string>('');
 
     const [result, handleGenerateSummary, isPending] = useActionState(generateSummary, null);
 
@@ -22,18 +23,19 @@ export default function Generator() {
         if (result) {
             if (schemaSummaryQuestions.safeParse(result).success) {
                 setSummary(result as SQ);
+                setSubject(localSubject);
                 setIsFinish(true);
                 router.replace("/user-app/resumos");
             } else {
                 console.log('erro de validacao');
             }
         }
-    }, [result, router, setSummary])
+    }, [result, localSubject, router, setSummary, setSubject])
 
     return (
         <div>
             <form action={handleGenerateSummary} className="flex items-center shadow-lg rounded-lg">
-                <Input name="assunto" type="text" className="md:w-96 h-12 focus:border-main rounded-tr-none rounded-br-none bg-slate-100 shadow-none" />
+                <Input name="assunto" type="text" className="md:w-96 h-12 focus:border-main rounded-tr-none rounded-br-none bg-slate-100 shadow-none" onChange={(e) => setLocalSubject(e.target.value)} />
                 <Button
                     disabled={isPending || isFinish}
                     className="h-12 w-12 hover:bg-blue-800 rounded-tl-none rounded-bl-none bg-main transition-all"

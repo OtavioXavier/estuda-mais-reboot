@@ -5,14 +5,17 @@ import { SQ } from '@/types';
 
 interface SummaryContextType {
     data: SQ;
-    setSummary: (data: SQ) => void;
+    subject: string;
     isEmpty: boolean;
+    setSummary: (data: SQ) => void;
+    setSubject: (subject: string) => void;
 }
 
 const SummaryContext = createContext<SummaryContextType | undefined>(undefined);
 
 export const SummaryProvider = ({ children }: { children: ReactNode }) => {
     const [data, setSummary] = useState<SQ>({ resumos: [], questoes: [] });
+    const [subject, setSubject] = useState<string>('');
 
     useEffect(() => {
         const savedSummary = localStorage.getItem('summary');
@@ -30,14 +33,23 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const saveSubject = (subject: string) => {
+        setSubject(subject);
+        if (subject) {
+            localStorage.setItem('subject', JSON.stringify(subject));
+        } else {
+            localStorage.removeItem('subject');
+        }
+    };
+
     const isEmpty = data.resumos.length === 0 && data.questoes.length === 0;
 
     return (
-        <SummaryContext.Provider value={{ data, setSummary: saveSummary, isEmpty }}>
+        <SummaryContext.Provider value={{ data, setSummary: saveSummary, isEmpty, setSubject: saveSubject, subject }}>
             {children}
         </SummaryContext.Provider>
     );
-};
+};  
 
 export const useSummary = () => {
     const context = useContext(SummaryContext);
