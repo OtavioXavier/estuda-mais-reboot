@@ -17,6 +17,7 @@ parentPort?.on("message", async (assunto) => {
             'wikipedia',
             ...
           ]
+            Não escreva nada aném do json
           `;
   try {
     const response = await model.generateContent(prompt);
