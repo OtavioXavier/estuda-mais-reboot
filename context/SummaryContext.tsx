@@ -5,47 +5,35 @@ import { SQ } from '@/types';
 
 interface SummaryContextType {
     data: SQ;
-    subject: string;
     isEmpty: boolean;
-    setSummary: (data: SQ) => void;
-    setSubject: (subject: string) => void;
+    setData: (data: SQ) => void;
 }
 
 const SummaryContext = createContext<SummaryContextType | undefined>(undefined);
 
 export const SummaryProvider = ({ children }: { children: ReactNode }) => {
-    const [data, setSummary] = useState<SQ>({ resumos: [], questoes: [] });
-    const [subject, setSubject] = useState<string>('');
+    const [data, setData] = useState<SQ>({ resumos: [], questoes: [] });
 
     useEffect(() => {
-        const savedSummary = localStorage.getItem('summary');
+        const savedSummary = localStorage.getItem('sq');
         if (savedSummary) {
-            setSummary(JSON.parse(savedSummary));
+            setData(JSON.parse(savedSummary));
         }
     }, []);
 
-    const saveSummary = (data: SQ) => {
-        setSummary(data);
+    const saveData = (data: SQ) => {
+        setData(data);
         if (data) {
-            localStorage.setItem('summary', JSON.stringify(data));
+            localStorage.setItem('sq', JSON.stringify(data));
         } else {
-            localStorage.removeItem('summary');
-        }
-    };
-
-    const saveSubject = (subject: string) => {
-        setSubject(subject);
-        if (subject) {
-            localStorage.setItem('subject', JSON.stringify(subject));
-        } else {
-            localStorage.removeItem('subject');
+            localStorage.removeItem('sq');
         }
     };
 
     const isEmpty = data.resumos.length === 0 && data.questoes.length === 0;
 
     return (
-        <SummaryContext.Provider value={{ data, setSummary: saveSummary, isEmpty, setSubject: saveSubject, subject }}>
+        <SummaryContext.Provider value={{ data, setData: saveData, isEmpty}}>
             {children}
         </SummaryContext.Provider>
     );

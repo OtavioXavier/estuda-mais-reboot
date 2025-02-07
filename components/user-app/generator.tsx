@@ -13,7 +13,7 @@ import { useSummary } from "@/context/SummaryContext";
 
 export default function Generator() {
     const [isFinish, setIsFinish] = useState<boolean>(false);
-    const { setSummary, setSubject } = useSummary();
+    const { setData } = useSummary();
     const router = useRouter();
     const [localSubject, setLocalSubject] = useState<string>('');
 
@@ -22,15 +22,14 @@ export default function Generator() {
     useEffect(() => {
         if (result) {
             if (schemaSummaryQuestions.safeParse(result).success) {
-                setSummary(result as SQ);
-                setSubject(localSubject);
+                setData(result as SQ);
                 setIsFinish(true);
                 router.replace("/user-app/resumos");
             } else {
                 console.log('erro de validacao');
             }
         }
-    }, [result, localSubject, router, setSummary, setSubject])
+    }, [result, localSubject, router, setData])
 
     return (
         <div>
