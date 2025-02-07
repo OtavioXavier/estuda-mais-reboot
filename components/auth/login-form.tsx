@@ -13,12 +13,12 @@ import { Eye, EyeClosed } from "lucide-react";
 import type { formSchemaLogin } from "@/types/schemas";
 import { ScrollArea } from "../ui/scroll-area";
 import { login } from "@/app/actions";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
-
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchemaLogin>>({
     defaultValues: {
@@ -36,7 +36,7 @@ export default function LoginForm() {
         title: "Sucesso",
         description: "Login concluido com sucesso!"
       });
-
+      router.replace('/user-app');
 
     } catch (error) {
       toast({

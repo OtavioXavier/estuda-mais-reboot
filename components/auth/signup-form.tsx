@@ -16,10 +16,13 @@ import { Eye, EyeClosed } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { formSchemaSignup } from "@/types/schemas";
 import { signup } from "@/app/actions";
+import { useRouter } from "next/navigation";
 
 export default function CadastrarForm() {
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState<boolean>(false);
+    const router = useRouter();
+  
 
   const form = useForm<z.infer<typeof formSchemaSignup>>({
     resolver: zodResolver(formSchemaSignup),
@@ -40,7 +43,9 @@ export default function CadastrarForm() {
         title: "Sucesso",
         description: "Cadastro concluido com sucesso!"
       })
+
       form.reset();
+      router.replace('/user-app');
     }
     catch (error) {
 
