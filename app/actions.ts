@@ -102,8 +102,8 @@ function createQuestions(assunto: string): Promise<Questao[]> {
   return new Promise((resolve, reject) => {
     const worker = new Worker("./utils/question_thread.mjs");
 
-    worker.on("message", (question: Questao[]) => {
-      resolve(question);
+    worker.on("message", (questoes: Questao[]) => {
+      resolve(questoes);
     })
 
     worker.on('error', (error: Error) => {
