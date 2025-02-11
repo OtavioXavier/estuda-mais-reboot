@@ -3,7 +3,7 @@ export type Resumo = {
     titulo: string,
     texto: string,
     link: string,
-    site: string
+    fonte: string
 }
 
 export type Questao = {

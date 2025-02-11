@@ -12,7 +12,7 @@ parentPort?.on('message', async (messageInput) => {
     {
       "resumo": {
         "id": "string",
-        "site": "string",
+        "fonte": "string",
         "titulo": "string",
         "texto": "string",
         "link": "string"
