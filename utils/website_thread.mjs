@@ -9,22 +9,25 @@ parentPort?.on("message", async (assunto) => {
     process.env.NEXT_PUBLIC_GOOGLE_GENERATIVE_AI_API_KEY?.toString() || ''
   );
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
-  const prompt = `me de o nome dos 3 melores artigos para estudar ${assunto} usando este schema de json  
-          sites: string[]
+  const prompt = `
+  prompt = me dê o nome dos 3 melhores artigos como fonte para estudos no assunto: ${assunto}, como este exemplo:
+{
+  "fontes": [
+    'Nome do Artigo 1',
+    'Nome do Artigo 2',
+    'Nome do Artigo 3'
+]
+}
 
-          um exemplo:
-          sites: [
-            'wikipedia',
-            ...
-          ]
-            Não escreva nada aném do json
-          `;
+   Gere apenas o JSON sem outros textos ou formatações. Certifique-se de que o JSON gerado é válido e não contém caracteres especiais ou de controle.
+  `;
+
   try {
     const response = await model.generateContent(prompt);
     const responseText = response.response.text();
     const cleanedText = responseText.replace(/```json|```/g, '').trim();
     const responseData = JSON.parse(cleanedText);
-    parentPort?.postMessage(responseData.sites)
+    parentPort?.postMessage(responseData.fontes)
   } catch (error) {
     parentPort?.postMessage({ error: error.message });
   } finally {
