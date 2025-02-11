@@ -14,7 +14,7 @@ interface IBoard {
 export default function Board({ resumos, questoes }: IBoard) {
     const fakeSummary = useMemo(() => ({
         id: '',
-        site: '',
+        fonte: '',
         titulo: '',
         texto: '',
         link: '',
@@ -35,7 +35,7 @@ export default function Board({ resumos, questoes }: IBoard) {
                     {resumos.map((resumo, i) => (
                         <ListItem
                             isSelected={selected === resumo.id}
-                            site={resumo.site} key={i}
+                            site={resumo.fonte} key={i}
                             onClick={() => setSelected(resumo.id)} />
                     ))}
 
@@ -57,7 +57,7 @@ export default function Board({ resumos, questoes }: IBoard) {
                         <ListItem
                             key={i}
                             isSelected={selected === resumo.id}
-                            site={resumo.site}
+                            site={resumo.fonte}
                             onClick={() => setSelected(resumo.id)} />
                     ))}
                     <ListItem
