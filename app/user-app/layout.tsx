@@ -8,7 +8,7 @@ export default async function UserAppLayout({ children,
     children: React.ReactNode;
 }>) {
     const supabase = await createClient();
-    const { data: {user} } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     return (
         <>
@@ -17,7 +17,7 @@ export default async function UserAppLayout({ children,
                     <Link href={"/user-app"}>
                         <Logo theme="blue" />
                     </Link>
-                    <UserNav user={user}/>
+                    <UserNav user={user} />
                 </nav>
             </header>
             <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-cyan-200 via-slate-50 to-neutral-50">
