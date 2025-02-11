@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Estudar+
 
-## Getting Started
+Estudar+ é uma plataforma desenvolvida em **Next.js** com **Supabase** e **AI SDK da Vercel** que auxilia estudantes no aprendizado por meio de resumos e questões geradas por inteligência artificial.
 
-First, run the development server:
+## 🚀 Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Autenticação:** Cadastro e login de usuários.
+- **Pesquisa de Assuntos:** O usuário pode buscar por um tema de interesse.
+- **Geração de Conteúdo:** A IA gera **3 resumos** sobre o tema pesquisado.
+- **Geração de Questões:** A IA gera questões relacionadas ao tema.
+- **Correção Inteligente:** A IA analisa as respostas e fornece explicações detalhadas.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Tecnologias Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js** - Framework React para aplicações web
+- **Supabase** - Backend como serviço para autenticação e banco de dados
+- **AI SDK da Vercel** - Geração de resumos e questões com IA
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 Instalação
 
-## Learn More
+1. Clone este repositório:
+   ```sh
+   git clone https://github.com/OtavioXavier/estuda-mais-reboot.git
+   ```
+2. Acesse a pasta do projeto:
+   ```sh
+   cd estuda-mais-reboot
+   ```
+3. Instale as dependências:
+   ```sh
+   npm install
+   ```
+4. Configure as variáveis de ambiente no arquivo `.env.local`:
+   ```sh
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   AI_API_KEY=your_ai_sdk_key
+   ```
+5. Execute o projeto:
+   ```sh
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+## 📌 Contribuição
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Se deseja contribuir, siga os passos:
+1. Fork este repositório
+2. Crie um branch para sua funcionalidade: `git checkout -b minha-feature`
+3. Faça commit das mudanças: `git commit -m 'Adicionando minha feature'`
+4. Envie para o repositório remoto: `git push origin minha-feature`
+5. Abra um Pull Request
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+Feito com ❤️ por Otavio Xavier(https://github.com/OtavioXavier)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
