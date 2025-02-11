@@ -1,22 +1,5 @@
 import { z } from "zod";
 
-export const schemaSummaryQuestions = z.object({
-   resumos: z.object({
-      id: z.string(),
-      titulo: z.string(),
-      site: z.string(),
-      texto: z.string(),
-      link: z.string()
-   }).array(),
-   questoes: z.object({
-      id: z.string(),
-      numero: z.number(),
-      pergunta: z.string(),
-      resposta: z.string(),
-      alternativas: z.string().array(),
-   }).array(),
-});
-
 export const formSchemaLogin = z.object({
    email: z.string({ required_error: "Email é necessário.", }).email({ message: 'Por favor insira um email válido.' }).trim(),
    password: z
@@ -27,7 +10,6 @@ export const formSchemaLogin = z.object({
 export const generateSummarySchema = z.object({
    assunto: z.string().min(2, { message: 'é necessário um assunto para começarmos os resumos' })
 })
-
 
 export const formSchemaSignup = z.object({
    nome: z
