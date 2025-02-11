@@ -85,10 +85,12 @@ export default function Question({ questao, corrigir }: QuestionProps) {
                                     Por quê?
                                 </Button>
                             </div>
-                            <div className=" text-zinc-500">
+                            <div className=" text-zinc-500 text-sm">
                                 {
-                                    why !== '' &&
-                                    <p className={`${josefinSans.className} text-sm`}>{why}</p>
+                                    why !== '' && <>
+                                        <p className="text-black font-bold">Resposta correta: {questao.resposta}</p>
+                                        <p>{why}</p>
+                                    </>
                                 }
                                 {
                                     isPending &&
