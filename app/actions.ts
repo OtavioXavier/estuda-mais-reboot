@@ -18,7 +18,7 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
 
     const { assunto } = result.data;
 
-    const websites = await searchWebsites(assunto);
+    const websites = await searchSources(assunto);
 
     const [resumos, questoes] = await Promise.all([
       Promise.all([
@@ -50,12 +50,12 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
   }
 };
 
-function searchWebsites(assunto: string): Promise<string[]> {
+function searchSources(assunto: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const worker = new Worker("./utils/website_thread.mjs");
 
-    worker.on("message", (websites: string[]) => {
-      resolve(websites);
+    worker.on("message", (fontes: string[]) => {
+      resolve(fontes);
     })
 
     worker.on('error', (error: Error) => {
