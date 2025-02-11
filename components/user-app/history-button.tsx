@@ -14,7 +14,7 @@ export default async function HistoryButton() {
         .limit(1)
         .eq('usuario', user?.id)
 
-    if (resumo?.length > 0) {
+    if (resumo && resumo?.length > 0) {
         return (
             <Link className={'absolute top-20 right-10'} href="/user-app/resumos" replace>
                 <Button className={`${josefinSans.className} h-12 bg-main hover:bg-blue-800 `}>
