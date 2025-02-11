@@ -1,14 +1,15 @@
 'use server'
 
-import { generateSummarySchema, schemaSummaryQuestions } from '@/types/schemas';
-import { IMessageInput, Questao, Resumo, type SQ } from '@/types';
+import { generateSummarySchema } from '@/types/schemas';
+import { IMessageInput, Questao, Resumo, } from '@/types';
 import { Worker } from 'node:worker_threads';
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import type { formSchemaLogin, formSchemaSignup } from "@/types/schemas";
 import { z } from 'zod';
+import crypto from 'node:crypto'
 
-export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | string | null> => {
+export const generateSummary = async (_: unknown, data: FormData): Promise<string | null | undefined> => {
   try {
     const result = generateSummarySchema.safeParse(Object.fromEntries(data));
 
@@ -35,15 +36,48 @@ export const generateSummary = async (_: unknown, data: FormData): Promise<SQ | 
 
     const resumosResult: Resumo[] = resumos;
     const questoesResult: Questao[] = questoes.flat();
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    const sq: SQ = {
-      resumos: resumosResult,
-      questoes: questoesResult
+    if (!user) {
+      throw new Error("Usuário não autenticado.");
     }
 
+    await supabase.from('resumo').delete().eq('usuario', user.id);
+    await supabase.from('questao').delete().eq('usuario', user.id);
 
-    const validatedObject = schemaSummaryQuestions.parse(sq);
-    return validatedObject;
+    const resumosInsert = resumosResult.map((resumo) => ({
+      id: crypto.randomUUID(),
+      titulo: resumo.titulo,
+      texto: resumo.texto,
+      link: resumo.link,
+      fonte: resumo.fonte,
+      usuario: user.id,
+    }));
+
+    const questoesInsert = questoesResult.map((questao) => ({
+      id: crypto.randomUUID(),
+      pergunta: questao.pergunta,
+      alternativas: questao.alternativas,
+      resposta: questao.resposta,
+      usuario: user.id,
+    }));
+
+    const { error: resumosError } = await supabase.from('resumo').insert(resumosInsert);
+
+    if (resumosError) {
+      console.log(resumosError.message)
+      await supabase.from('resumo').delete().eq('usuario', user.id);
+      throw new Error('erro na gravação de resumos: ', resumosError)
+    }
+
+    const { error: questaoError } = await supabase.from('questao').insert(questoesInsert);
+    if (questaoError) {
+      console.log(questaoError.message)
+      await supabase.from('questao').delete().eq('usuario', user.id);
+      throw new Error('erro na gravação de questoes: ', questaoError)
+    }
+    return 'geração concluida';
   } catch (error) {
     console.log('Erro durante a geração de resumos e questões: ', error);
     return null;
@@ -153,8 +187,9 @@ export const signup = async (formData: z.infer<typeof formSchemaSignup>) => {
     const { error } = await supabase
       .from('estudante')
       .insert({
+        id: user.id,
         email: formData.email,
-        nome: formData.nome,
+        usuario: formData.nome,
         termo: formData.termo
       });
     if (error) {
