@@ -8,7 +8,6 @@ export type Resumo = {
 
 export type Questao = {
     id: string,
-    numero: number,
     pergunta: string,
     resposta: string,
     alternativas: string[]
